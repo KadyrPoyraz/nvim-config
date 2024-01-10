@@ -23,6 +23,7 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
+vim.opt.ignorecase = true
 
 vim.opt.updatetime = 50
 
