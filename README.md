@@ -1,12 +1,12 @@
+# My custom config for nvim
+Custom config for Neovim inspired by ThePrimeagen's config and his video (https://github.com/ThePrimeagen/init.lua).
+
 **NOTICE:**
 You must install a terminal emulator for this setup to work correctly.
 > MacOS
 - [iterm2](https://iterm2.com/): Good terminal emulator for macOS
 > Linux
 - [terminator](https://gnome-terminator.org/): Good terminal emulator for linux that i have tested once :)
-
-# My custom config for nvim
-Custom config for Neovim inspired by ThePrimeagen's config and his video (https://github.com/ThePrimeagen/init.lua).
 
 ## Installation
 Firstly, ensure Neovim is installed.
@@ -24,6 +24,17 @@ Next, clone this repo into ~/.config/ by executing the command below:
 git clone --depth 1 https://github.com/KadyrPoyraz/nvim-config.git ~/.config/nvim
 ```
 This command will clone this repo into the `~/.config/nvim directory`, which automatically sets this repo as your Nvim config.
+
+From now you shuld install ```ripgrep``` in order to be able to use live_grep properly
+> MacOS
+```shell
+brew install ripgrep
+```
+> Linux
+```shell
+sudo apt install ripgrep
+```
+
 After that, install all Packer packages by opening the Packer config:
 ```shell
 nvim ~/.config/nvim/lua/kadyr/packer.lua
