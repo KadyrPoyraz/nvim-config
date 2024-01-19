@@ -26,7 +26,11 @@ return require('packer').startup(function(use)
         end
     })
 
-    use('theprimeagen/harpoon')
+    -- Remove branch from harpoon2 to master after time comes
+    use({
+        'theprimeagen/harpoon',
+        branch = 'harpoon2',
+    })
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -51,4 +55,5 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     }
+    use("folke/trouble.nvim")
 end)
