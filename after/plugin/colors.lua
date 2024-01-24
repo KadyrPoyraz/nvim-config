@@ -1,3 +1,7 @@
+require('rose-pine').setup({
+    disable_background = true
+})
+
 function ColorMyAboba()
     color = color or 'rose-pine-moon'
     vim.cmd.colorscheme(color)
