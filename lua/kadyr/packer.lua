@@ -56,4 +56,5 @@ return require('packer').startup(function(use)
         end
     }
     use("folke/trouble.nvim")
+    use("nvim-treesitter/nvim-treesitter-context")
 end)
