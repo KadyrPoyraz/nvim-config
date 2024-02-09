@@ -57,4 +57,5 @@ return require('packer').startup(function(use)
     }
     use("folke/trouble.nvim")
     use("nvim-treesitter/nvim-treesitter-context")
+    use("lewis6991/gitsigns.nvim")
 end)
