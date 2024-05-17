@@ -34,12 +34,4 @@ brew install ripgrep
 ```shell
 sudo apt install ripgrep
 ```
-
-After that, install all Packer packages by opening the Packer config:
-```shell
-nvim ~/.config/nvim/lua/kadyr/packer.lua
-```
-Then, execute the commands `:so` and `:PackerSync`, which will install all Packer packages. Afterward, run `:lua ColorMyAboba()`, which will set the color scheme. From that moment, you are good to go.
-
-## TODO
-Move from [packer](https://github.com/wbthomason/packer.nvim) to [lazy.nvim](https://github.com/folke/lazy.nvim) because packer has been unmaintained since August 2023
+# That's all! Open up your vim and enjoy the best text editor ever!
