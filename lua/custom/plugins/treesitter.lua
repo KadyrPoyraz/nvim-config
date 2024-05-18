@@ -2,7 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = function()
-			local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 			ts_update()
 		end,
 		config = function()
@@ -18,6 +18,10 @@ return {
 				-- Automatically install missing parsers when entering buffer
 				-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 				auto_install = false,
+
+				ident = {
+					enable = true,
+				},
 
 				highlight = {
 					enable = true,
@@ -42,5 +46,4 @@ return {
 			vim.treesitter.language.register("templ", "templ")
 		end,
 	},
-	"nvim-treesitter/nvim-treesitter-context",
 }
