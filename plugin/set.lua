@@ -30,6 +30,8 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
+vim.opt.wrap = true
+
 -- vim.opt.cursorline = true
 
 -- vim.opt.list = true

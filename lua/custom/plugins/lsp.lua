@@ -36,7 +36,7 @@ return {
                     },
                 },
                 lua_ls = true,
-                tsserver = true,
+                -- tsserver = true,
                 jsonls = {
                     settings = {
                         json = {
@@ -70,7 +70,7 @@ return {
 
             require("mason").setup()
             local ensure_installed = {
-                "tsserver",
+                -- "tsserver",
                 "gopls",
                 "lua_ls",
                 "volar",
