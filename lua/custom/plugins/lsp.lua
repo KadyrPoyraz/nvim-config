@@ -36,7 +36,8 @@ return {
                     },
                 },
                 lua_ls = true,
-                -- tsserver = true,
+                ts_ls = true,
+                clangd = true,
                 jsonls = {
                     settings = {
                         json = {
@@ -57,6 +58,8 @@ return {
                         },
                     },
                 },
+
+                pyright = true,
             }
 
             local servers_to_install = vim.tbl_filter(function(key)
@@ -70,10 +73,12 @@ return {
 
             require("mason").setup()
             local ensure_installed = {
-                -- "tsserver",
+                "ts_ls",
                 "gopls",
                 "lua_ls",
                 "volar",
+                "pyright", -- Python LSP
+                "clangd",  -- C LSP
             }
 
             vim.list_extend(ensure_installed, servers_to_install)

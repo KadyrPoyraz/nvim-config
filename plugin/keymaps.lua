@@ -40,5 +40,6 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
-vim.keymap.set("n", "<leader>err", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader>err", "oif err != nil {<CR>}<Esc>Oreturn fmt.Errorf(\"\", err)<Esc>6h")
+vim.keymap.set("n", "<leader>eq", "ifmt.Println(\"==================\")<Esc>")
 vim.keymap.set("n", "<leader>log", "console.log()<Esc>i")
