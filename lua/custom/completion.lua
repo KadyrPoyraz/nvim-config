@@ -7,8 +7,16 @@ lspkind.init {}
 local cmp = require "cmp"
 
 cmp.setup {
+    formatting = {
+        format = lspkind.cmp_format {
+            mode = "symbol_text",
+            maxwidth = 50,
+            ellipsis_char = "...",
+        },
+    },
     sources = {
         { name = "nvim_lsp" },
+        { name = "luasnip" },
         { name = "path" },
         { name = "buffer" },
     },

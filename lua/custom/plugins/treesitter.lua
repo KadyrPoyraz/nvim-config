@@ -19,7 +19,7 @@ return {
 				-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 				auto_install = false,
 
-				ident = {
+				indent = {
 					enable = true,
 				},
 

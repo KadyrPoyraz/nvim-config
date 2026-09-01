@@ -2,7 +2,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "folke/neodev.nvim",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -13,19 +12,11 @@ return {
             "b0o/SchemaStore.nvim",
         },
         config = function()
-            require("neodev").setup {
-                library = {
-                    plugins = { "nvim-dap-ui" },
-                    types = true,
-                },
-            }
-
-            local capabilities = nil
-            if pcall(require, "cmp_nvim_lsp") then
-                capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+            if has_cmp_nvim_lsp then
+                capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
             end
-
-            local lspconfig = require("lspconfig")
 
             local servers = {
                 gopls = {
@@ -37,6 +28,7 @@ return {
                 },
                 lua_ls = true,
                 ts_ls = true,
+                vue_ls = true,
                 clangd = true,
                 jsonls = {
                     settings = {
@@ -72,16 +64,19 @@ return {
             end, vim.tbl_keys(servers))
 
             require("mason").setup()
-            local ensure_installed = {
-                "ts_ls",
-                "gopls",
-                "lua_ls",
-                "volar",
-                "pyright", -- Python LSP
-                "clangd",  -- C LSP
-            }
-
+            local ensure_installed = {}
             vim.list_extend(ensure_installed, servers_to_install)
+
+            local seen = {}
+            ensure_installed = vim.tbl_filter(function(tool)
+                if seen[tool] then
+                    return false
+                end
+
+                seen[tool] = true
+                return true
+            end, ensure_installed)
+
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
             for name, config in pairs(servers) do
@@ -92,7 +87,8 @@ return {
                     capabilities = capabilities,
                 }, config)
 
-                lspconfig[name].setup(config)
+                vim.lsp.config(name, config)
+                vim.lsp.enable(name)
             end
 
             local disable_semantic_tokens = {
@@ -106,21 +102,19 @@ return {
 
 
                     local opts = { buffer = bufnr, remap = false }
-                    local builtin = require('telescope.builtin')
 
                     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
                     vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
                     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
                     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
                     vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
                     vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
                     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-                    -- vim.keymap.set("n", "<leader>vrr", function() builtin.lsp_references() end, opts)
                     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
                     vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
-                    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
+                    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
 
                     local filetype = vim.bo[bufnr].filetype
                     if disable_semantic_tokens[filetype] then

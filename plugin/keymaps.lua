@@ -32,12 +32,24 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set("n", "<leader>cp", function()
+    local path = vim.fn.expand("%:p")
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+    if path == "" then
+        vim.notify("Current buffer has no file path", vim.log.levels.WARN)
+        return
+    end
+
+    vim.fn.setreg("+", path)
+    vim.notify("Copied path: " .. path)
+end)
+
+vim.keymap.set("n", "<leader>vpp", function()
+    vim.cmd.edit(vim.fn.stdpath("config") .. "/init.lua")
+end)
 
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
+    vim.cmd("source %")
 end)
 
 vim.keymap.set("n", "<leader>err", "oif err != nil {<CR>}<Esc>Oreturn fmt.Errorf(\"\", err)<Esc>6h")
